@@ -393,7 +393,7 @@ with col_fs:
     )
     f1, f2, f3 = st.columns(3)
     f1.metric("HOLD - NEED REVISION", int(fs_counts.get("HOLD - NEED REVISION", 0)))
-    f2.metric("INCOMPLETE (0/10–6/10)", int(fs_counts.get("INCOMPLETE", 0)))
+    f2.metric("INCOMPLETE", int(fs_counts.get("INCOMPLETE", 0)))
     f3.metric("READY TO SUBMIT ATP", int(fs_counts.get("READY TO SUBMIT ATP", 0)))
 
 with col_av:
