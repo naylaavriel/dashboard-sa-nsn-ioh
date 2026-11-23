@@ -1,0 +1,188 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap');
+
+:root {
+    --font-utama: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+    --primary-dark: #1B365D;
+    --primary: #005A9C;
+    --primary-light: #1E73BE;
+    --accent-bg: #E6F1F9;
+    --accent-border: #9CC5E3;
+    --bg-page: #F2F6FA;
+    --bg-card: #FFFFFF;
+    --text-main: #1B365D;
+    --text-muted: #546E85;
+    --border-soft: #DCE6F0;
+}
+
+/* Font utama untuk semua teks & kontrol UI */
+html, body, .stApp,
+[data-testid="stAppViewContainer"],
+[data-testid="stAppViewBlockContainer"],
+[data-testid="stSidebarContent"],
+[data-testid="stMarkdownContainer"],
+[data-testid="stMarkdownContainer"] p,
+[data-testid="stMarkdownContainer"] li,
+[data-testid="stMetricLabel"],
+[data-testid="stMetricValue"],
+[data-testid="stMetricDelta"],
+.stTextInput input,
+.stSelectbox div,
+.stMultiSelect div,
+.stButton button,
+label, p, h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-utama) !important;
+}
+
+/* Lindungi ikon bawaan Streamlit agar tidak berubah jadi teks */
+[data-testid="stIconMaterial"],
+[class*="material-icons"],
+.material-symbols-rounded,
+.material-symbols-outlined {
+    font-family: 'Material Symbols Rounded', 'Material Symbols Outlined', 'Material Icons' !important;
+}
+
+/* Ukuran font dasar halaman */
+html, body, .stApp {
+    font-size: 14.5px !important;
+    background-color: var(--bg-page) !important;
+    color: var(--text-main) !important;
+}
+
+/* Turunkan & lebarkan area konten utama agar banner tidak kepotong header */
+.block-container {
+    padding-top: 3.5rem !important;
+    padding-left: 2.2rem !important;
+    padding-right: 2.2rem !important;
+    padding-bottom: 2.5rem !important;
+    max-width: 100% !important;
+}
+
+/* Banner utama */
+.top-hero-banner {
+    width: 100% !important;
+    box-sizing: border-box !important;
+    background: linear-gradient(95deg, #1B365D 0%, #005A9C 60%, #1E73BE 100%) !important;
+    color: #FFFFFF !important;
+    padding: 16px 22px !important;
+    border-radius: 10px !important;
+    margin-top: 6px !important;
+    margin-bottom: 16px !important;
+    box-shadow: 0 3px 10px rgba(27, 54, 93, 0.16) !important;
+}
+
+.top-hero-title {
+    font-size: 1.32rem !important;
+    font-weight: 800 !important;
+    letter-spacing: -0.02em !important;
+    line-height: 1.25 !important;
+    margin: 0 !important;
+    color: #FFFFFF !important;
+}
+
+.top-hero-subtitle {
+    font-size: 0.88rem !important;
+    font-weight: 400 !important;
+    color: #E3F0FA !important;
+    margin: 4px 0 0 0 !important;
+}
+
+/* Heading bagian (Filter & Pencarian, Log Aktivitas Terbaru, Status Validasi Site) */
+h1, [data-testid="stHeading"] h1 {
+    font-size: 1.48rem !important;
+    color: var(--primary-dark) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+}
+
+h2, [data-testid="stHeading"] h2 {
+    font-size: 1.28rem !important;
+    color: var(--primary-dark) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+}
+
+h3, [data-testid="stHeading"] h3, .stSubheader {
+    font-size: 1.08rem !important;
+    color: var(--primary-dark) !important;
+    font-weight: 700 !important;
+    letter-spacing: -0.015em !important;
+}
+
+/* Label input, selectbox, multiselect & tombol */
+label, .stTextInput input, .stSelectbox div, .stMultiSelect div, .stButton button {
+    font-size: 0.9rem !important;
+}
+
+/* Input & multiselect */
+div[data-baseweb="input"] > div,
+div[data-baseweb="select"] > div {
+    background-color: var(--bg-card) !important;
+    border-radius: 8px !important;
+    border-color: var(--accent-border) !important;
+}
+
+div[data-baseweb="input"] > div:focus-within,
+div[data-baseweb="select"] > div:focus-within {
+    border-color: var(--primary) !important;
+    box-shadow: 0 0 0 2px rgba(0, 90, 156, 0.16) !important;
+}
+
+span[data-baseweb="tag"] {
+    background-color: var(--accent-bg) !important;
+    color: var(--primary-dark) !important;
+    border: 1px solid var(--accent-border) !important;
+    font-weight: 600 !important;
+    border-radius: 6px !important;
+}
+
+/* Kartu metric */
+[data-testid="stMetric"] {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: 10px !important;
+    padding: 14px 18px !important;
+    box-shadow: 0 1px 3px rgba(27, 54, 93, 0.05) !important;
+}
+
+[data-testid="stMetricLabel"] {
+    font-size: 0.76rem !important;
+    font-weight: 700 !important;
+    color: var(--text-muted) !important;
+    text-transform: uppercase !important;
+    letter-spacing: 0.03em !important;
+}
+
+[data-testid="stMetricValue"] {
+    font-size: 1.5rem !important;
+    font-weight: 800 !important;
+    color: var(--primary) !important;
+}
+
+/* Dataframe */
+[data-testid="stDataFrame"] {
+    background-color: var(--bg-card) !important;
+    border: 1px solid var(--border-soft) !important;
+    border-radius: 10px !important;
+    padding: 4px !important;
+    box-shadow: 0 1px 3px rgba(27, 54, 93, 0.05) !important;
+}
+
+/* Sidebar */
+[data-testid="stSidebar"] {
+    background-color: var(--bg-card) !important;
+    border-right: 1px solid var(--border-soft) !important;
+}
+
+/* Tombol */
+.stButton > button {
+    background-color: var(--primary) !important;
+    color: #FFFFFF !important;
+    border: none !important;
+    border-radius: 8px !important;
+    font-weight: 600 !important;
+}
+
+.stButton > button:hover {
+    background-color: var(--primary-dark) !important;
+    color: #FFFFFF !important;
+}
