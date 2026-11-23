@@ -3,6 +3,7 @@ import re
 import pandas as pd
 import streamlit as st
 from google.auth.transport.requests import Request
+from google.oauth2 import service_account
 from google.oauth2.credentials import Credentials
 from google_auth_oauthlib.flow import InstalledAppFlow
 from googleapiclient.discovery import build
@@ -15,10 +16,13 @@ st.set_page_config(
     page_icon="📡",
     layout="wide",
 )
+
+
 def load_css(file_path: str = "style.css"):
     if os.path.exists(file_path):
         with open(file_path, "r", encoding="utf-8") as f:
             st.markdown(f"<style>{f.read()}</style>", unsafe_allow_html=True)
+
 
 load_css("style.css")
 
@@ -39,6 +43,17 @@ TAB_MASTER = "Master_Validasi_Site"
 # FUNGSI OTENTIKASI & PENARIKAN DATA GOOGLE SHEETS
 # ==============================================================================
 def get_sheets_service():
+    # 1. Prioritaskan Service Account dari Streamlit Secrets (untuk Cloud / deployment)
+    if "gcp_service_account" in st.secrets:
+        sa_info = dict(st.secrets["gcp_service_account"])
+        if "private_key" in sa_info and isinstance(sa_info["private_key"], str):
+            sa_info["private_key"] = sa_info["private_key"].replace("\\n", "\n")
+        creds = service_account.Credentials.from_service_account_info(
+            sa_info, scopes=SCOPES
+        )
+        return build("sheets", "v4", credentials=creds)
+
+    # 2. Fallback ke OAuth lokal jika dijalankan di komputer lokal tanpa st.secrets
     creds = None
     if os.path.exists("token.json"):
         creds = Credentials.from_authorized_user_file("token.json", SCOPES)
@@ -48,7 +63,7 @@ def get_sheets_service():
         else:
             if not os.path.exists("client_secret.json"):
                 raise FileNotFoundError(
-                    "File 'client_secret.json' tidak ditemukan di folder project."
+                    "Service account belum dikonfigurasi di Secrets dan 'client_secret.json' tidak ditemukan di folder project."
                 )
             flow = InstalledAppFlow.from_client_secrets_file(
                 "client_secret.json", SCOPES
