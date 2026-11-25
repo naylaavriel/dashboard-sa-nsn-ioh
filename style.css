@@ -186,3 +186,7 @@ span[data-baseweb="tag"] {
     background-color: var(--primary-dark) !important;
     color: #FFFFFF !important;
 }
+
+.preset-btn-row div[data-testid="stButton"] > button {
+    margin-top: 28px;
+}
