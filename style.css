@@ -187,6 +187,6 @@ span[data-baseweb="tag"] {
     color: #FFFFFF !important;
 }
 
-.preset-btn-row div[data-testid="stButton"] > button {
-    margin-top: 28px;
+div[data-testid="stHorizontalBlock"]:has(input[aria-label*="Rentang Tanggal"]) {
+    align-items: flex-end !important;
 }
