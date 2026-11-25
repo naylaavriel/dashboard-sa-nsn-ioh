@@ -435,23 +435,7 @@ if valid_dates:
     if "date_range" not in st.session_state:
         st.session_state["date_range"] = (min_d, max_d)
 
-    c_cal, c_b1, c_b2, c_b3 = st.columns([2.4, 0.8, 0.8, 0.8])
-    with c_cal:
-        picked = st.date_input(
-            "Rentang Tanggal (Kalender):",
-            value=st.session_state["date_range"],
-            min_value=min_d,
-            max_value=max_d,
-            format="DD/MM/YYYY",
-        )
-        if isinstance(picked, (list, tuple)) and len(picked) == 2:
-            date_range_selected = (picked[0], picked[1])
-            st.session_state["date_range"] = date_range_selected
-        elif isinstance(picked, (list, tuple)) and len(picked) == 1:
-            date_range_selected = (picked[0], picked[0])
-        else:
-            date_range_selected = (picked, picked)
-c_cal, c_b1, c_b2, c_b3 = st.columns([2.4, 0.8, 0.8, 0.8], vertical_alignment="bottom")
+    c_cal, c_b1, c_b2, c_b3 = st.columns([2.4, 0.8, 0.8, 0.8], vertical_alignment="bottom")
     with c_cal:
         picked = st.date_input(
             "Rentang Tanggal (Kalender):",
@@ -482,7 +466,7 @@ c_cal, c_b1, c_b2, c_b3 = st.columns([2.4, 0.8, 0.8, 0.8], vertical_alignment="b
         if st.button("Semua", use_container_width=True):
             st.session_state["date_range"] = (min_d, max_d)
             st.rerun()
-            
+
 # ==============================================================================
 # TERAPKAN FILTER KE 3 DATAFRAME
 # ==============================================================================
