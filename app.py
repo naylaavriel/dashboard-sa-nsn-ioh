@@ -451,23 +451,26 @@ if valid_dates:
             date_range_selected = (picked[0], picked[0])
         else:
             date_range_selected = (picked, picked)
+with c_b1:
+    st.markdown('<div class="preset-btn-row">', unsafe_allow_html=True)
+    if st.button("7 Hari", use_container_width=True):
+        st.session_state["date_range"] = (max(min_d, max_d - timedelta(days=6)), max_d)
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
-    with c_b1:
-        st.write("")
-        if st.button("7 Hari", use_container_width=True):
-            st.session_state["date_range"] = (max(min_d, max_d - timedelta(days=6)), max_d)
-            st.rerun()
-    with c_b2:
-        st.write("")
-        if st.button("30 Hari", use_container_width=True):
-            st.session_state["date_range"] = (max(min_d, max_d - timedelta(days=29)), max_d)
-            st.rerun()
-    with c_b3:
-        st.write("")
-        if st.button("Semua", use_container_width=True):
-            st.session_state["date_range"] = (min_d, max_d)
-            st.rerun()
+with c_b2:
+    st.markdown('<div class="preset-btn-row">', unsafe_allow_html=True)
+    if st.button("30 Hari", use_container_width=True):
+        st.session_state["date_range"] = (max(min_d, max_d - timedelta(days=29)), max_d)
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
+with c_b3:
+    st.markdown('<div class="preset-btn-row">', unsafe_allow_html=True)
+    if st.button("Semua", use_container_width=True):
+        st.session_state["date_range"] = (min_d, max_d)
+        st.rerun()
+    st.markdown("</div>", unsafe_allow_html=True)
 
 # ==============================================================================
 # TERAPKAN FILTER KE 3 DATAFRAME
