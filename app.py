@@ -572,7 +572,7 @@ with g1:
             color_discrete_sequence=["#005A9C", "#1B365D", "#16a34a", "#dc2626", "#f59e0b"],
         )
         fig1.update_layout(height=250, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
-        st.plotly_chart(fig1, use_container_width=True)
+        st.plotly_chart(fig1, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik log.")
 
@@ -590,7 +590,7 @@ with g2:
             color_discrete_sequence=["#16a34a", "#dc2626", "#64748b", "#005A9C"],
         )
         fig2.update_layout(height=250, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
-        st.plotly_chart(fig2, use_container_width=True)
+        st.plotly_chart(fig2, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik master.")
 
@@ -613,10 +613,9 @@ with g3:
             labels={"size": "Jumlah"},
         )
         fig3.update_layout(height=250, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
-        st.plotly_chart(fig3, use_container_width=True)
+        st.plotly_chart(fig3, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik ATP.")
-
 
 # ==============================================================================
 # TABEL 1: LOG AKTIVITAS TERBARU (BER-STYLE)
