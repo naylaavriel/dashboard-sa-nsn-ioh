@@ -264,7 +264,7 @@ def make_badge(val) -> str:
     return f'<span class="pill pill-warn">{esc}</span>'
 
 
-def render_styled_table(df: pd.DataFrame, columns: list[str], badge_cols: set[str] = None, max_rows: int = 100):
+def render_styled_table(df: pd.DataFrame, columns: list[str], badge_cols: set[str] = None, max_rows: int = 15):
     badge_cols = badge_cols or set()
     avail_cols = [c for c in columns if c in df.columns]
     if df.empty or not avail_cols:
