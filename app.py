@@ -29,79 +29,6 @@ def load_css(file_path: str = "style.css"):
 
 load_css("style.css")
 
-st.markdown(
-    """
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-    <style>
-    html, body, [class*="css"] {
-        font-family: 'Plus Jakarta Sans', sans-serif !important;
-    }
-    .tbl-wrap {
-        width: 100%;
-        overflow-x: auto;
-        border: 1px solid #e2e8f0;
-        border-radius: 12px;
-        background: #ffffff;
-        box-shadow: 0 1px 3px rgba(15, 23, 42, 0.04);
-    }
-    table.styled-tbl {
-        width: 100%;
-        border-collapse: collapse;
-        font-size: 13px;
-        text-align: left;
-    }
-    table.styled-tbl thead th {
-        background: #f8fafc;
-        color: #1B365D;
-        font-weight: 700;
-        padding: 11px 14px;
-        border-bottom: 1px solid #e2e8f0;
-        white-space: nowrap;
-    }
-    table.styled-tbl tbody td {
-        padding: 10px 14px;
-        border-bottom: 1px solid #f1f5f9;
-        color: #1e293b;
-        vertical-align: middle;
-        white-space: nowrap;
-    }
-    table.styled-tbl tbody tr:hover {
-        background-color: #f8fafc;
-    }
-    .pill {
-        display: inline-block;
-        padding: 3px 10px;
-        border-radius: 999px;
-        font-size: 11.5px;
-        font-weight: 700;
-    }
-    .pill-ok {
-        background: #dcfce7;
-        color: #15803d;
-        border: 1px solid #bbf7d0;
-    }
-    .pill-bad {
-        background: #fee2e2;
-        color: #b91c1c;
-        border: 1px solid #fecaca;
-    }
-    .pill-warn {
-        background: #fef3c7;
-        color: #b45309;
-        border: 1px solid #fde68a;
-    }
-    .pill-info {
-        background: #e0f2fe;
-        color: #005A9C;
-        border: 1px solid #bae6fd;
-    }
-    </style>
-    """,
-    unsafe_allow_html=True,
-)
-
 SCOPES = ["https://www.googleapis.com/auth/spreadsheets.readonly"]
 DEFAULT_SHEET_URL = "https://docs.google.com/spreadsheets/d/17I1icQx6YUcUXI6lsmuqJviqnn9HMqYmgCDYuCrrPCg/edit?usp=sharing"
 TAB_LOG = "Log_Daily_Activity"
@@ -264,7 +191,12 @@ def make_badge(val) -> str:
     return f'<span class="pill pill-warn">{esc}</span>'
 
 
-def render_styled_table(df: pd.DataFrame, columns: list[str], badge_cols: set[str] = None, max_rows: int = 15):
+def render_styled_table(
+    df: pd.DataFrame,
+    columns: list[str],
+    badge_cols: set[str] = None,
+    max_rows: int = 15,
+):
     badge_cols = badge_cols or set()
     avail_cols = [c for c in columns if c in df.columns]
     if df.empty or not avail_cols:
@@ -295,7 +227,7 @@ def render_styled_table(df: pd.DataFrame, columns: list[str], badge_cols: set[st
         unsafe_allow_html=True,
     )
     if len(df) > max_rows:
-        st.caption(f"Menampilkan {max_rows} dari {len(df)} baris agar halaman tetap ringan.")
+        st.caption(f"Menampilkan {max_rows} dari {len(df)} baris.")
 
 
 # ==============================================================================
@@ -467,6 +399,7 @@ if valid_dates:
             st.session_state["date_range"] = (min_d, max_d)
             st.rerun()
 
+
 # ==============================================================================
 # TERAPKAN FILTER KE 3 DATAFRAME
 # ==============================================================================
@@ -569,7 +502,7 @@ with g1:
             color="Status",
             color_discrete_sequence=["#005A9C", "#1B365D", "#16a34a", "#dc2626", "#f59e0b"],
         )
-        fig1.update_layout(height=250, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
+        fig1.update_layout(height=210, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
         st.plotly_chart(fig1, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik log.")
@@ -587,7 +520,7 @@ with g2:
             color="Verdict",
             color_discrete_sequence=["#16a34a", "#dc2626", "#64748b", "#005A9C"],
         )
-        fig2.update_layout(height=250, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
+        fig2.update_layout(height=210, showlegend=False, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
         st.plotly_chart(fig2, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik master.")
@@ -610,130 +543,164 @@ with g3:
             color_discrete_sequence=["#16a34a", "#005A9C", "#dc2626", "#f59e0b"],
             labels={"size": "Jumlah"},
         )
-        fig3.update_layout(height=250, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
+        fig3.update_layout(height=210, margin=dict(l=5, r=5, t=5, b=5), plot_bgcolor="white")
         st.plotly_chart(fig3, use_container_width=True, config={"staticPlot": True, "displayModeBar": False})
     else:
         st.info("Belum ada data grafik ATP.")
 
-# ==============================================================================
-# TABEL 1: LOG AKTIVITAS TERBARU (BER-STYLE)
-# ==============================================================================
-st.divider()
-st.header("Log Aktivitas Terbaru (SA Tower & SA Ground)")
-
-m1, m2, m3, m4 = st.columns(4)
-m1.metric("Total Record Terbaru", len(df_log_view))
-m2.metric("Total Site Unik", df_log_view["Site_ID"].nunique() if not df_log_view.empty else 0)
-m3.metric("SA Tower", int((df_log_view["Item_Kategori"] == "SA Tower").sum()) if not df_log_view.empty else 0)
-m4.metric("SA Ground", int((df_log_view["Item_Kategori"] == "SA Ground").sum()) if not df_log_view.empty else 0)
-
-render_styled_table(
-    df_log_view,
-    columns=[
-        "Log_ID",
-        "Timestamp",
-        "Tgl",
-        "Email_Validator",
-        "Region",
-        "System_Key",
-        "SMP_ID",
-        "Site_ID",
-        "Item_Kategori",
-        "Item_Validasi",
-        "Status_Validasi",
-        "Catatan_Revisi",
-    ],
-    badge_cols={"Item_Kategori", "Status_Validasi"},
-)
-
 
 # ==============================================================================
-# TABEL 2: MASTER VALIDASI SITE (BER-STYLE)
+# TOMBOL PILIHAN TABEL (1 TABEL AKTIF BIAR HEMAT SCROLL)
 # ==============================================================================
 st.divider()
-st.header("Status Validasi Site & Audit Verdict")
 
-col_fs, col_av = st.columns(2)
-with col_fs:
-    st.subheader("Final Status (3 Kategori)")
+if "active_tab" not in st.session_state:
+    st.session_state["active_tab"] = "log"
+
+sw1, sw2, sw3, sw4 = st.columns([1.3, 1.3, 1.3, 1.0], vertical_alignment="center")
+
+with sw1:
+    if st.button(
+        f"Log Aktivitas ({len(df_log_view)})",
+        type="primary" if st.session_state["active_tab"] == "log" else "secondary",
+        use_container_width=True,
+    ):
+        st.session_state["active_tab"] = "log"
+        st.rerun()
+
+with sw2:
+    if st.button(
+        f"Master Validasi ({len(df_master_view)})",
+        type="primary" if st.session_state["active_tab"] == "master" else "secondary",
+        use_container_width=True,
+    ):
+        st.session_state["active_tab"] = "master"
+        st.rerun()
+
+with sw3:
+    if st.button(
+        f"Riwayat ATP ({len(df_atp_view)})",
+        type="primary" if st.session_state["active_tab"] == "atp" else "secondary",
+        use_container_width=True,
+    ):
+        st.session_state["active_tab"] = "atp"
+        st.rerun()
+
+with sw4:
+    limit_rows = st.selectbox(
+        "Baris:",
+        options=[10, 15, 25, 50],
+        index=1,
+        label_visibility="collapsed",
+    )
+
+# --- TAMPILKAN TABEL SESUAI TOMBOL YANG DIPILIH ---
+if st.session_state["active_tab"] == "log":
+    st.subheader("Log Aktivitas Terbaru (SA Tower & SA Ground)")
+    m1, m2, m3, m4 = st.columns(4)
+    m1.metric("Total Record Terbaru", len(df_log_view))
+    m2.metric("Total Site Unik", df_log_view["Site_ID"].nunique() if not df_log_view.empty else 0)
+    m3.metric("SA Tower", int((df_log_view["Item_Kategori"] == "SA Tower").sum()) if not df_log_view.empty else 0)
+    m4.metric("SA Ground", int((df_log_view["Item_Kategori"] == "SA Ground").sum()) if not df_log_view.empty else 0)
+
+    render_styled_table(
+        df_log_view,
+        columns=[
+            "Log_ID",
+            "Timestamp",
+            "Tgl",
+            "Email_Validator",
+            "Region",
+            "System_Key",
+            "SMP_ID",
+            "Site_ID",
+            "Item_Kategori",
+            "Item_Validasi",
+            "Status_Validasi",
+            "Catatan_Revisi",
+        ],
+        badge_cols={"Item_Kategori", "Status_Validasi"},
+        max_rows=limit_rows,
+    )
+
+elif st.session_state["active_tab"] == "master":
+    st.subheader("Status Validasi Site & Audit Verdict")
     fs_counts = df_master_view["Final_Status_Group"].value_counts() if not df_master_view.empty else pd.Series(dtype=int)
-    f1, f2, f3 = st.columns(3)
-    f1.metric("HOLD - NEED REVISION", int(fs_counts.get("HOLD - NEED REVISION", 0)))
-    f2.metric("INCOMPLETE (0/10–6/10)", int(fs_counts.get("INCOMPLETE", 0)))
-    f3.metric("READY TO SUBMIT ATP", int(fs_counts.get("READY TO SUBMIT ATP", 0)))
-
-with col_av:
-    st.subheader("Audit Verdict (3 Kategori)")
     av_counts = df_master_view["Audit_Verdict_Group"].value_counts() if not df_master_view.empty else pd.Series(dtype=int)
+
+    k1, k2, k3, k4 = st.columns(4)
+    k1.metric("READY TO SUBMIT ATP", int(fs_counts.get("READY TO SUBMIT ATP", 0)))
+    k2.metric("HOLD - NEED REVISION", int(fs_counts.get("HOLD - NEED REVISION", 0)))
+    k3.metric("COMPLIANT", int(av_counts.get("COMPLIANT", 0)))
+    k4.metric("LEGACY / PRE-QC", int(av_counts.get("LEGACY / PRE-QC GATE", 0)))
+
+    cf1, cf2 = st.columns(2)
+    with cf1:
+        filter_fs = st.multiselect(
+            "Filter Final Status:",
+            options=["HOLD - NEED REVISION", "INCOMPLETE", "READY TO SUBMIT ATP"],
+            placeholder="Semua kategori Final Status...",
+        )
+    with cf2:
+        filter_av = st.multiselect(
+            "Filter Audit Verdict:",
+            options=["COMPLIANT", "LEGACY / PRE-QC GATE", "Not Submitted Yet"],
+            placeholder="Semua kategori Audit Verdict...",
+        )
+
+    df_master_table = df_master_view.copy()
+    if not df_master_table.empty:
+        if filter_fs:
+            df_master_table = df_master_table[df_master_table["Final_Status_Group"].isin(filter_fs)]
+        if filter_av:
+            df_master_table = df_master_table[df_master_table["Audit_Verdict_Group"].isin(filter_av)]
+
+    render_styled_table(
+        df_master_table,
+        columns=[
+            "Region",
+            "Project_Phase",
+            "System_Key",
+            "SMP_ID",
+            "Site_ID",
+            "Site_Name",
+            "01_Review_SA_Ground",
+            "02_Review_SA_Tower",
+            "Final_Status_Group",
+            "Final_Status",
+            "Last_Validator_Email",
+            "Audit_Verdict_Group",
+        ],
+        badge_cols={
+            "01_Review_SA_Ground",
+            "02_Review_SA_Tower",
+            "Final_Status_Group",
+            "Final_Status",
+            "Audit_Verdict_Group",
+        },
+        max_rows=limit_rows,
+    )
+
+else:
+    st.subheader(f"Riwayat ATP ({TAB_ATP})")
+    atp_counts = df_atp_view["Event_Type_Clean"].value_counts() if not df_atp_view.empty else pd.Series(dtype=int)
     a1, a2, a3 = st.columns(3)
-    a1.metric("COMPLIANT", int(av_counts.get("COMPLIANT", 0)))
-    a2.metric("LEGACY / PRE-QC GATE", int(av_counts.get("LEGACY / PRE-QC GATE", 0)))
-    a3.metric("Not Submitted Yet", int(av_counts.get("Not Submitted Yet", 0)))
+    a1.metric("Total Event ATP", len(df_atp_view))
+    a2.metric("Approved", int(atp_counts.get("APPROVED", 0)))
+    a3.metric("Lainnya", int(len(df_atp_view) - atp_counts.get("APPROVED", 0)))
 
-cf1, cf2 = st.columns(2)
-with cf1:
-    filter_fs = st.multiselect(
-        "Filter Final Status:",
-        options=["HOLD - NEED REVISION", "INCOMPLETE", "READY TO SUBMIT ATP"],
-        placeholder="Semua kategori Final Status...",
+    render_styled_table(
+        df_atp_view,
+        columns=[
+            "Timestamp",
+            "System_Key",
+            "SMP_ID",
+            "Site_ID",
+            "Actual_Submit_Nokia",
+            "Actual_Approved_Nokia",
+            "Status_ATP",
+            "Event_Type",
+        ],
+        badge_cols={"Status_ATP", "Event_Type"},
+        max_rows=limit_rows,
     )
-with cf2:
-    filter_av = st.multiselect(
-        "Filter Audit Verdict:",
-        options=["COMPLIANT", "LEGACY / PRE-QC GATE", "Not Submitted Yet"],
-        placeholder="Semua kategori Audit Verdict...",
-    )
-
-df_master_table = df_master_view.copy()
-if not df_master_table.empty:
-    if filter_fs:
-        df_master_table = df_master_table[df_master_table["Final_Status_Group"].isin(filter_fs)]
-    if filter_av:
-        df_master_table = df_master_table[df_master_table["Audit_Verdict_Group"].isin(filter_av)]
-
-render_styled_table(
-    df_master_table,
-    columns=[
-        "Region",
-        "Project_Phase",
-        "System_Key",
-        "SMP_ID",
-        "Site_ID",
-        "Site_Name",
-        "01_Review_SA_Ground",
-        "02_Review_SA_Tower",
-        "Final_Status_Group",
-        "Final_Status",
-        "Last_Validator_Email",
-        "Audit_Verdict_Group",
-    ],
-    badge_cols={
-        "01_Review_SA_Ground",
-        "02_Review_SA_Tower",
-        "Final_Status_Group",
-        "Final_Status",
-        "Audit_Verdict_Group",
-    },
-)
-
-
-# ==============================================================================
-# TABEL 3: RIWAYAT ATP (LOG_ATP_HISTORY)
-# ==============================================================================
-st.divider()
-st.header(f"Riwayat ATP ({TAB_ATP})")
-
-render_styled_table(
-    df_atp_view,
-    columns=[
-        "Timestamp",
-        "System_Key",
-        "SMP_ID",
-        "Site_ID",
-        "Actual_Submit_Nokia",
-        "Actual_Approved_Nokia",
-        "Status_ATP",
-        "Event_Type",
-    ],
-    badge_cols={"Status_ATP", "Event_Type"},
-)
