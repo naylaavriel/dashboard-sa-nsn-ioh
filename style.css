@@ -197,20 +197,22 @@ div[data-testid="stHorizontalBlock"]:has(input[aria-label*="Rentang Tanggal"]) {
     align-items: flex-end !important;
 }
 
-/* Tabel ber-style & pill badge */
+/* Tabel ber-style & pill badge (lebih rapat & hemat tinggi) */
 .tbl-wrap {
     width: 100%;
     overflow-x: auto;
     border: 1px solid var(--border-soft);
-    border-radius: 10px;
+    border-radius: 8px;
     background: var(--bg-card);
-    box-shadow: 0 1px 3px rgba(27, 54, 93, 0.05);
+    box-shadow: 0 1px 2px rgba(27, 54, 93, 0.04);
+    margin-bottom: 6px;
 }
 
 table.styled-tbl {
     width: 100%;
     border-collapse: collapse;
-    font-size: 0.82rem;
+    font-size: 11px !important;
+    line-height: 1.25;
     text-align: left;
 }
 
@@ -218,13 +220,13 @@ table.styled-tbl thead th {
     background: #f8fafc;
     color: var(--primary-dark);
     font-weight: 700;
-    padding: 8px 12px;
+    padding: 5px 8px !important;
     border-bottom: 1px solid var(--border-soft);
     white-space: nowrap;
 }
 
 table.styled-tbl tbody td {
-    padding: 7px 12px;
+    padding: 4px 8px !important;
     border-bottom: 1px solid #f1f5f9;
     color: #1e293b;
     vertical-align: middle;
@@ -237,9 +239,10 @@ table.styled-tbl tbody tr:hover {
 
 .pill {
     display: inline-block;
-    padding: 2px 8px;
+    padding: 1px 6px !important;
     border-radius: 999px;
-    font-size: 0.75rem;
+    font-size: 10px !important;
+    line-height: 1.3;
     font-weight: 700;
 }
 
