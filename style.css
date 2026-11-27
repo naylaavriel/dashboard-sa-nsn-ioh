@@ -180,6 +180,32 @@ span[data-baseweb="tag"] {
 }
 
 /* Tombol */
+/* Tombol Aktif (Primary) */
+.stButton > button[kind="primary"] {
+    background-color: var(--primary) !important;
+    color: #FFFFFF !important;
+    border: 1px solid var(--primary) !important;
+    font-weight: 700 !important;
+}
+
+.stButton > button[kind="primary"]:hover {
+    background-color: var(--primary-dark) !important;
+    color: #FFFFFF !important;
+}
+
+/* Tombol Tidak Aktif (Secondary) */
+.stButton > button[kind="secondary"] {
+    background-color: var(--bg-card) !important;
+    color: var(--primary-dark) !important;
+    border: 1px solid var(--accent-border) !important;
+    font-weight: 600 !important;
+}
+
+.stButton > button[kind="secondary"]:hover {
+    background-color: var(--accent-bg) !important;
+    border-color: var(--primary) !important;
+}
+
 .stButton > button {
     background-color: var(--primary) !important;
     color: #FFFFFF !important;
